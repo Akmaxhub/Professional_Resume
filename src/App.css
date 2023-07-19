@@ -85,9 +85,41 @@ body {
     align-items: center;
     justify-content: center;
     height: 300px; /* Adjust the height as needed */
-    background-image: url('./banner.jpg'); /* Replace with the actual image file name */
+    background-color: #ddd; /* Replace with the actual image file name */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
   }
   
+  .contact-form {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+  }
+  
+  .form-group button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #171a1d;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }

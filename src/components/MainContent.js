@@ -1,8 +1,57 @@
 // MainContent.js
 
-import React from 'react';
+import React, { useRef } from 'react';
 
 const MainContent = () => {
+  const contactSectionRef = useRef(null);
+
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+
+    // Get the form data
+    const formData = new FormData(event.target);
+    const formValues = Object.fromEntries(formData.entries());
+
+    // Send an email with the form data
+    const emailData = {
+      to: 'ankur13kr@gmail.com', // Update with your email address
+      subject: 'New Contact Form Submission',
+      body: JSON.stringify(formValues, null, 2),
+    };
+
+    // Send the email using your preferred method (e.g., API call, server-side code)
+    sendEmail(emailData);
+
+    // Reset the form
+    event.target.reset();
+
+    // Scroll to the contact section
+    contactSectionRef.current.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const sendEmail = (emailData) => {
+    // Implement your logic to send an email using the emailData
+    // This can be done using an API call or server-side code
+    // Example API call using fetch:
+    fetch('https://api.example.com/send-email', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(emailData),
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log('Email sent successfully');
+        } else {
+          console.error('Failed to send email');
+        }
+      })
+      .catch((error) => {
+        console.error('Error sending email', error);
+      });
+  };
+
   return (
     <main className="main-content">
       <section id="professional-summary" className="section">
@@ -87,8 +136,45 @@ const MainContent = () => {
           <li>2010 – 2014: Bachelor of Technology (Computer Science and Engineering), Punjab Technical University, India</li>
         </ul>
       </section>
+      <section id="contact-me" className="section">
+        <h2 className="section__title">Contact Me</h2>
+        <form className="contact-form" onSubmit={handleFormSubmit}>
+          <div className="form-group">
+            <label htmlFor="firstName">First Name*</label>
+            <input type="text" id="firstName" name="firstName" required />
+          </div>
+          <div className="form-group">
+            <label htmlFor="lastName">Last Name*</label>
+            <input type="text" id="lastName" name="lastName" required />
+          </div>
+          <div className="form-group">
+            <label htmlFor="email">Email*</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+          <div className="form-group">
+            <label htmlFor="reasonToContact">Reason to contact*</label>
+            <select id="reasonToContact" name="reasonToContact" required>
+              <option value="">Please select a reason*</option>
+              <option value="jobOffer">Job Offer</option>
+              <option value="school">School</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label htmlFor="fileUpload">Send me a file (optional)</label>
+            <input type="file" id="fileUpload" name="fileUpload" />
+          </div>
+          <button type="submit">Submit</button>
+        </form>
+      </section>
+      <section id="contact-me" className="section" ref={contactSectionRef}>
+        <h2 className="section__title">Contact Me</h2>
+        <form className="contact-form" onSubmit={handleFormSubmit}>
+          {/* Your form content */}
+        </form>
+      </section>
     </main>
   );
-}
+};
 
 export default MainContent;
